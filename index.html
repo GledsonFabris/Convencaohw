@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="styles.css">
+
+<style>
+  .offline { color: red; }
+  .online { color: green; }
+</style>
+<script>
+function convertContent(status) {
+  var textarea = document.getElementById("inputTextArea");
+  var outputDiv = document.getElementById("outputDiv");
+  var content = textarea.value;
+
+  var lines = content.split('\n');
+  var formattedContent = "";
+
+  var regex = /(\d+)\/\s*(\d+)\/\s*(\d+)\s+(\d+)\s+(\w+)\s+(\w+)\s+(\w+)\s+(\w+)\s+(\w+)/;
+
+  lines.forEach(function(line) {
+    var match = line.match(regex);
+    if (match) {
+      var statusIndex = match.indexOf(status);
+      if (statusIndex !== -1) {
+        var formattedLine = 'display ont info ' + match[1] + ' ' + match[2] + ' ' + match[3] + ' ' + match[4] + '\n';
+        formattedContent += formattedLine;
+      }
+    }
+  });
+
+  outputDiv.innerHTML = '<pre>' + formattedContent + '</pre>';
+}
+</script>
+</head>
+<body>
+
+<textarea id="inputTextArea" rows="20" cols="80">
+<!-- Cole o conteúdo aqui -->
+          <!-- Vou usar um exemplo simplificado para fins de demonstração -->
+   0/ 0/2    0  48575443BFFB8557  active      online   normal   match    no
+</textarea>
+<br>
+<label for="statusSelect">Escolha o status:</label>
+<select id="statusSelect">
+  <option value="offline">Offline</option>
+  <option value="online">Online</option>
+</select>
+<button onclick="convertContent(document.getElementById('statusSelect').value)">Converter</button>
+<div id="outputDiv">
+</div>
+
+</body>
+</html>
