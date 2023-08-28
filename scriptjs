@@ -1,0 +1,22 @@
+function convertContent(status) {
+  var textarea = document.getElementById("inputTextArea");
+  var outputDiv = document.getElementById("outputDiv");
+  var content = textarea.value;
+
+  var lines = content.split('\n');
+  var formattedContent = "";
+
+  var regex = /(\d+)\/\s*(\d+)\/\s*(\d+)\s+(\d+)\s+(\w+)\s+(\w+)\s+(\w+)\s+(\w+)\s+(\w+)/;
+
+  lines.forEach(function(line) {
+    var match = line.match(regex);
+    if (match) {
+      var statusIndex = match.indexOf(status);
+      if (statusIndex !== -1) {
+        var formattedLine = 'display ont info ' + match[1] + ' ' + match[2] + ' ' + match[3] + ' ' + match[4] + '\n';
+        formattedContent += formattedLine;
+      }
+    }
+  });
+
+  outputDiv.innerHTML = '<pre>' + formattedContent + '</pre>';
